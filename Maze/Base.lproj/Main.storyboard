@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16G8c" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Maze" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Border" translatesAutoresizingMaskIntoConstraints="NO" id="Nmc-Dq-cSO">
+                                <rect key="frame" x="55" y="30" width="265" height="182"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hg0-E5-Kua">
+                                <rect key="frame" x="55" y="30" width="240" height="157"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="bT8-Bb-bC3"/>
+                                    <constraint firstAttribute="height" constant="157" id="rkJ-Ny-7Gp"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0qh-IX-o8g" userLabel="space">
+                                <rect key="frame" x="16" y="212" width="343" height="122.5"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8eh-91-cCY" userLabel="space">
+                                <rect key="frame" x="16" y="545" width="343" height="122"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="10" id="TNP-1F-wo7"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Gaw-aM-QsB">
+                                <rect key="frame" x="26" y="334.5" width="323" height="210.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2jV-t1-z53">
+                                        <rect key="frame" x="0.0" y="0.0" width="323" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="lessThanOrEqual" priority="999" constant="100" id="JpG-5B-w0E"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="20"/>
+                                        <state key="normal" title="Generate" backgroundImage="Button"/>
+                                        <connections>
+                                            <action selector="generateAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LCp-dm-fUQ"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6yu-sZ-U9b">
+                                        <rect key="frame" x="0.0" y="110" width="323" height="100.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wmH-Nq-pWQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="156.5" height="100.5"/>
+                                                <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="20"/>
+                                                <state key="normal" title="Lorem" backgroundImage="Button"/>
+                                                <connections>
+                                                    <action selector="loremAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dnb-XI-Ak3"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVv-SF-sFy">
+                                                <rect key="frame" x="166.5" y="0.0" width="156.5" height="100.5"/>
+                                                <fontDescription key="fontDescription" name="Zapfino" family="Zapfino" pointSize="20"/>
+                                                <state key="normal" title="Ipsum" backgroundImage="Button"/>
+                                                <connections>
+                                                    <action selector="ipsumAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jzt-9B-fjf"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="BVv-SF-sFy" firstAttribute="width" secondItem="wmH-Nq-pWQ" secondAttribute="width" id="xME-Fr-9iG"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="6yu-sZ-U9b" firstAttribute="height" secondItem="2jV-t1-z53" secondAttribute="height" id="EB5-UC-Nt3"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="8eh-91-cCY" firstAttribute="leading" secondItem="0qh-IX-o8g" secondAttribute="leading" id="2Zw-lM-Wfb"/>
+                            <constraint firstItem="0qh-IX-o8g" firstAttribute="top" secondItem="Nmc-Dq-cSO" secondAttribute="bottom" id="2t5-M4-Ic3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8eh-91-cCY" secondAttribute="trailing" id="3Ud-aL-a4I"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="top" secondItem="Hg0-E5-Kua" secondAttribute="top" id="3v1-ro-FD5"/>
+                            <constraint firstItem="8eh-91-cCY" firstAttribute="top" secondItem="Gaw-aM-QsB" secondAttribute="bottom" id="5Gw-Jh-DBF"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="height" secondItem="Hg0-E5-Kua" secondAttribute="height" constant="25" id="Ddq-oT-5iH"/>
+                            <constraint firstItem="8eh-91-cCY" firstAttribute="trailing" secondItem="0qh-IX-o8g" secondAttribute="trailing" id="HeO-Yn-MXw"/>
+                            <constraint firstItem="Gaw-aM-QsB" firstAttribute="top" secondItem="0qh-IX-o8g" secondAttribute="bottom" id="KaR-Fi-1Ew"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Gaw-aM-QsB" secondAttribute="trailing" constant="10" id="Mtk-Vk-ypT"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="NNx-Yn-rN0"/>
+                            <constraint firstItem="8eh-91-cCY" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Nqv-0T-kBo"/>
+                            <constraint firstItem="Gaw-aM-QsB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="10" id="WfF-FU-E0R"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bwr-YS-wvK"/>
+                            <constraint firstItem="8eh-91-cCY" firstAttribute="height" secondItem="0qh-IX-o8g" secondAttribute="height" id="cdG-rS-8SL"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="width" secondItem="Hg0-E5-Kua" secondAttribute="width" constant="25" id="eGM-la-cBL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="8eh-91-cCY" secondAttribute="bottom" id="v5N-ly-9p7"/>
+                            <constraint firstItem="Nmc-Dq-cSO" firstAttribute="leading" secondItem="Hg0-E5-Kua" secondAttribute="leading" id="vrR-js-Xao"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="generateButton" destination="2jV-t1-z53" id="EoB-qE-gkH"/>
+                        <outlet property="heightOfMazeView" destination="rkJ-Ny-7Gp" id="94h-Cl-rnb"/>
+                        <outlet property="ipsumButton" destination="BVv-SF-sFy" id="k70-IX-o18"/>
+                        <outlet property="leadingOfMazeView" destination="vrR-js-Xao" id="VeD-KE-FQI"/>
+                        <outlet property="loremButton" destination="wmH-Nq-pWQ" id="waD-lW-z67"/>
+                        <outlet property="mazeView" destination="Hg0-E5-Kua" id="Cfg-QZ-pxp"/>
+                        <outlet property="topOfMazeView" destination="3v1-ro-FD5" id="Wne-u1-si8"/>
+                        <outlet property="widthOfMazeView" destination="bT8-Bb-bC3" id="Tup-7D-QUL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="133.59999999999999" y="129.08545727136433"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Border" width="30" height="30"/>
+        <image name="Button" width="120" height="120"/>
+    </resources>
+</document>
