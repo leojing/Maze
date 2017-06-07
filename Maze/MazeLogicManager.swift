@@ -18,24 +18,51 @@ class MazeLogicManager: NSObject {
     case south
   }
   
-  fileprivate var visitedRooms: Set<String>?
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
   fileprivate var group = DispatchGroup()
   
+  private var _visitedRooms: [String]?
+  var visitedRooms: [String]? {
+    set {
+      concurrentQueue.sync {
+        _visitedRooms = newValue
+      }
+    }
+    
+    get {
+      return concurrentQueue.sync {
+        _visitedRooms
+      }
+    }
+  }
+
   public var uiUpdateProtocol: MazeUIUpdateProtocol?
   
   // MARK: fetch start room, and set it's location as (x,y)
   public func startFetchRoom(x: Float, y: Float) {
-    visitedRooms = Set<String>()
+    visitedRooms = []
     
     mazeManager.fetchStartRoom { (data, error) in
-      let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+      guard let data = data else {
+        print("Empty data! Can't build Maze")
+        return
+      }
+      
+      let json = try? JSONSerialization.jsonObject(with: data, options: [])
       if let dictionary = json as? [String: Any] {
         if let roomId = dictionary["id"] as? String {
           self.traversalRooms(roomId, start: (x, y))
         }
       }
+      
+      if error != nil {
+        print("Error! Can't build Maze")
+      }
+    }
+    
+    group.notify(queue: .main) { 
+      print("finshed")
     }
   }
   
@@ -52,12 +79,7 @@ class MazeLogicManager: NSObject {
     if visited.contains(id) {
       return
     }
-    
-    // double check if this room is visited
-    if visited.contains(id) {
-      print(id)
-    }
-    
+
     self.concurrentQueue.async {
 
       self.mazeManager.fetchRoom(withIdentifier: id) { (data, error) in
@@ -69,19 +91,24 @@ class MazeLogicManager: NSObject {
           return
         }
         
-        // Parse room id and add it to visitedRooms Set to make sure it never been visited again.
         let roomInfo = Room(json: dictionary)
-        if let roomId = roomInfo?.id {
-          if var visited = self.visitedRooms {
-            visited.insert(roomId)
-            self.visitedRooms = visited
-          }
-        }
 
-        // Parse tile url, update maze view in main queue if it's not nil and UIUpdate protocol isn't nil
-        if let tileUrl = roomInfo?.tileUrl, let uiProtocol = self.uiUpdateProtocol {
-          DispatchQueue.main.async {
-            uiProtocol.updateMazeViewWith(tileUrl, x: start.x, y: start.y)
+        // Parse tile url, update maze view in main queue if it's not nil
+        if let tileUrl = roomInfo?.tileUrl {
+          
+          // Parse room id and add it to visitedRooms Set to make sure it never been visited again. This is must happens when the tile image exsit, if not, refetch this room again
+          if let roomId = roomInfo?.id {
+            if var visited = self.visitedRooms {
+              visited.append(roomId)
+              self.visitedRooms = visited
+            }
+          }
+
+          // draw tile if UIUpdate protocol isn't nil
+          if let uiProtocol = self.uiUpdateProtocol {
+            DispatchQueue.main.async {
+              uiProtocol.updateMazeViewWith(tileUrl, x: start.x, y: start.y)
+            }
           }
         }
         

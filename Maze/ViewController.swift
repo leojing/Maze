@@ -77,6 +77,10 @@ extension ViewController {
   
   @IBAction func loremAction(_ sender: Any) {
     print("lorem")
+    
+    for s in mazeLogicManager.visitedRooms!.sorted() {
+      print(s)
+    }
   }
   
   @IBAction func ipsumAction(_ sender: Any) {
