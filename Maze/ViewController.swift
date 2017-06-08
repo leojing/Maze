@@ -10,7 +10,8 @@ import UIKit
 import SDWebImage
 
 class ViewController: UIViewController {
-  
+
+  @IBOutlet weak var timeLabel: UILabel!
   @IBOutlet weak var generateButton: UIButton!
   @IBOutlet weak var loremButton: UIButton!
   @IBOutlet weak var ipsumButton: UIButton!
@@ -22,6 +23,8 @@ class ViewController: UIViewController {
 
   fileprivate static let tileWidth: Float = 5.0
   fileprivate var miniX: Float = 0.0, miniY: Float = 0.0, maxX: Float = 0.0, maxY: Float = 0.0
+  fileprivate var startTime: Date?, endTime: Date?
+  
   public var mazeLogicManager = MazeLogicManager()
   
   override func viewDidLoad() {
@@ -54,6 +57,9 @@ extension ViewController {
     maxX = miniX
     maxY = miniY
     
+    startTime = Date()
+    endTime = nil
+    
     mazeLogicManager.uiUpdateProtocol = self
     mazeLogicManager.startFetchRoom(x: miniX, y: miniY)
   }
@@ -78,8 +84,15 @@ extension ViewController {
   @IBAction func loremAction(_ sender: Any) {
     print("lorem")
     
-    for s in mazeLogicManager.visitedRooms!.sorted() {
-      print(s)
+    if let rooms = mazeLogicManager.visitedRooms {
+      let sortedRooms = rooms.sorted()
+      for i in 0 ..< sortedRooms.count-1 {
+        let a = sortedRooms[i]
+        let b = sortedRooms[i+1]
+        if a == b {
+          print("Duplicate!")
+        }
+      }
     }
   }
   
@@ -91,11 +104,10 @@ extension ViewController {
 
 // MARK: - UI Updates
 
-extension ViewController: MazeUIUpdateProtocol {
+extension ViewController {
   
   //MARK: update MazeView's frame, location and draw tile into maze
-  func updateMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
-    
+  fileprivate func redrawMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
     // draw each room with it's relatively location (x, y) and tile image's url
     let tileWidth = CGFloat(ViewController.tileWidth)
     let _x = CGFloat(x) * tileWidth
@@ -124,7 +136,34 @@ extension ViewController: MazeUIUpdateProtocol {
     
     self.view.updateConstraintsIfNeeded()
     self.view.layoutIfNeeded()
+  }
+  
+  // MARK: count how many time had been spent to creat the Maze
+  fileprivate func updateTimer() {
+    endTime = Date()
+    if let startTime = startTime, let endTime = endTime {
+      let interval = endTime.timeIntervalSince(startTime)
+      timeLabel.text = "Spent time: \(String(format: "%.2f", interval)) seconds"
+    }
+  }
 
+}
+
+// MARK: - Conform to MazeUIUpdateProtocol
+
+extension ViewController: MazeUIUpdateProtocol {
+  
+  //MARK: Error handling
+  func updateMazeViewWithError(_ error: Error?) {
+    let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+    alert.addAction(UIAlertAction(title: "oOh...", style: UIAlertActionStyle.cancel, handler:nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  //MARK: update maze view
+  func updateMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
+    redrawMazeViewWith(imageUrl, x: x, y: y)
+    updateTimer()
   }
   
 }
