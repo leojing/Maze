@@ -72,6 +72,13 @@ class MazeLogicManager: NSObject {
     guard let id = id, id.characters.count > 0 else {
       return
     }
+    
+    // if this room is visited, return
+    if let visited = self.visitedRooms  {
+      if visited.contains(id) {
+        return
+      }
+    }
 
     concurrentQueue.async { [weak self] in
       guard let strongSelf = self else {
