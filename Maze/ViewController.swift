@@ -95,7 +95,7 @@ extension ViewController {
 
 extension ViewController {
   
-  //MARK: update MazeView's frame, location and draw tile into maze
+  // MARK: update MazeView's frame, location and draw tile into maze
   fileprivate func redrawMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
     // draw each room with it's relatively location (x, y) and tile image's url
     let tileWidth = CGFloat(ViewController.tileWidth)
@@ -142,14 +142,17 @@ extension ViewController {
 
 extension ViewController: MazeUIUpdateProtocol {
   
-  //MARK: Error handling
+  // MARK: Error handling
   func updateMazeViewWithError(_ error: Error?) {
     let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
     alert.addAction(UIAlertAction(title: "oOh...", style: UIAlertActionStyle.cancel, handler:nil))
-    self.present(alert, animated: true, completion: nil)
+//    self.present(alert, animated: true, completion: nil)
+    if let errorMsg = error?.localizedDescription {
+      print("Error! \(errorMsg)")
+    }
   }
 
-  //MARK: update maze view
+  // MARK: update maze view
   func updateMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
     redrawMazeViewWith(imageUrl, x: x, y: y)
     updateTimer()
