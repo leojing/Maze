@@ -9,3 +9,11 @@ target 'Maze' do
 
 end
 
+target 'MazeTests' do
+  use_frameworks!
+  
+  pod 'SDWebImage', '~>3.8'
+  
+end
+
+

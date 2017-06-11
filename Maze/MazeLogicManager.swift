@@ -20,14 +20,14 @@ class MazeLogicManager: NSObject {
   
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
-  
+
   public var uiUpdateProtocol: MazeUIUpdateProtocol?
   
-  private var _visitedRooms: Set<String>?
-  public var visitedRooms: Set<String>? {
+  private var _visitedRooms: [String]?
+  public var visitedRooms: [String]? {
     set {
       concurrentQueue.sync {
-        _visitedRooms = newValue
+        self._visitedRooms = newValue
       }
     }
     
@@ -37,12 +37,11 @@ class MazeLogicManager: NSObject {
       }
     }
   }
-
   
   // MARK: fetch start room, and set it's location as (x,y)
   public func startFetchRoom(x: Float, y: Float) {
     if visitedRooms == nil {
-      visitedRooms = Set<String>()
+      visitedRooms = [String]()
     }
     else{
       visitedRooms?.removeAll()
@@ -74,18 +73,11 @@ class MazeLogicManager: NSObject {
       return
     }
 
-    // if this room is visited, return
-    if let visited = self.visitedRooms  {
-      if visited.contains(id) {
-        return
-      }
-    }
-
     concurrentQueue.async { [weak self] in
       guard let strongSelf = self else {
         return
       }
-
+      
       strongSelf.mazeManager.fetchRoom(withIdentifier: id) { (data, error) in
         if let error = error {
           DispatchQueue.main.async {
@@ -110,8 +102,13 @@ class MazeLogicManager: NSObject {
           
           // Parse room id and add it to visitedRooms Set to make sure it never been visited again. This is must happens when the tile image exsit, if not, refetch this room again
           if let roomId = roomInfo?.id {
-            if var visited = strongSelf.visitedRooms {
-              visited.insert(roomId)
+            // if this room is visited, return
+            if var visited = strongSelf.visitedRooms  {
+              if visited.contains(roomId) {
+                return
+              }
+              
+              visited.append(roomId)
               strongSelf.visitedRooms = visited
             }
           }
@@ -176,5 +173,22 @@ class MazeLogicManager: NSObject {
     return (x, y)
   }
 
+  // MARK: check if each room is only visited once
+  func roomVisitedTwice() -> Bool {
+    if let rooms = visitedRooms {
+      let sortedRooms = rooms.sorted()
+      for i in 0 ..< sortedRooms.count-1 {
+        let a = sortedRooms[i]
+        let b = sortedRooms[i+1]
+        if a == b {
+          return true
+        }
+      }
+    } else {
+      return true
+    }
+    
+    return false
+  }
 
 }

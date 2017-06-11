@@ -83,17 +83,6 @@ extension ViewController {
   
   @IBAction func loremAction(_ sender: Any) {
     print("lorem")
-    
-    if let rooms = mazeLogicManager.visitedRooms {
-      let sortedRooms = rooms.sorted()
-      for i in 0 ..< sortedRooms.count-1 {
-        let a = sortedRooms[i]
-        let b = sortedRooms[i+1]
-        if a == b {
-          print("Duplicate!")
-        }
-      }
-    }
   }
   
   @IBAction func ipsumAction(_ sender: Any) {

@@ -11,7 +11,6 @@ import XCTest
 
 class MazeTests: XCTestCase {
   
-//  var mazeLogicanager = MazeLogicManager()
   var vc = ViewController()
 
     override func setUp() {
@@ -32,9 +31,26 @@ class MazeTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
       
       XCTAssertNotNil(vc.mazeLogicManager)
-//      vc.mazeLogicManager.startFetchRoom(x: 0, y: 0)
+      
+      let startRooms = [(10, "R40912fa5dc6cdd6d"), (10, "R469737bdda6ac575"), (10, "R4b9a35bfd767c777"), (10, "R76a73fb5ea5acd7d"), (10, "R5b8a2fa5c777dd6d"), (10, "R419036bcdd6dc474"), (10, "R5a8b21abc676d363")]
+      for (t, roomId) in startRooms {
+        let ex = self.expectation(description: roomId)
+        
+        self.vc.mazeLogicManager.visitedRooms = []
+        self.vc.mazeLogicManager.traversalRooms(roomId, start: (0,0))
+        
+        print(roomId)
+        sleep(UInt32(t))
+        ex.fulfill()
+        
+        //Async function when finished call [expectation fullfill]
+        self.waitForExpectations(timeout: 0) { (error) in
+          XCTAssertNotNil(self.vc.mazeLogicManager.visitedRooms, "rooms are not empty")
+          XCTAssertFalse(self.vc.mazeLogicManager.roomVisitedTwice())
+        }
+      }
     }
-    
+  
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
