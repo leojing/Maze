@@ -20,6 +20,7 @@
 		24D4E5B11ED81B7100114508 /* TakeHomeTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; };
 		24D4E5B21ED81B7100114508 /* TakeHomeTask.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		24D8419C1EDBA7BA009E2337 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8419B1EDBA7BA009E2337 /* Room.swift */; };
+		24FC7EB31EF4285200730C28 /* TakeHomeTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24FC7EB21EF4285200730C28 /* TakeHomeTask.framework */; };
 		CF343D149D88738ED76521A4 /* Pods_MazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F865000B5E12AE431603B767 /* Pods_MazeTests.framework */; };
 		E2F9A0860B45B9B4A45D8C22 /* Pods_Maze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */; };
 /* End PBXBuildFile section */
@@ -73,6 +74,7 @@
 		24D4E59B1ED7CE8900114508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TakeHomeTask.framework; path = Maze/TakeHomeTask.framework; sourceTree = "<group>"; };
 		24D8419B1EDBA7BA009E2337 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		24FC7EB21EF4285200730C28 /* TakeHomeTask.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TakeHomeTask.framework; sourceTree = "<group>"; };
 		686C5FB8FCAF1762DCD25F6E /* Pods-Maze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Maze/Pods-Maze.release.xcconfig"; sourceTree = "<group>"; };
 		70E056B045220598F461D607 /* Pods-MazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Maze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,6 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CF343D149D88738ED76521A4 /* Pods_MazeTests.framework in Frameworks */,
+				24FC7EB31EF4285200730C28 /* TakeHomeTask.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +154,7 @@
 		24D4E58D1ED7CE8800114508 /* MazeTests */ = {
 			isa = PBXGroup;
 			children = (
+				24FC7EB21EF4285200730C28 /* TakeHomeTask.framework */,
 				24D4E58E1ED7CE8800114508 /* MazeTests.swift */,
 				24D4E5901ED7CE8800114508 /* Info.plist */,
 			);
@@ -646,6 +650,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MazeTests",
+				);
 				INFOPLIST_FILE = MazeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
@@ -664,6 +672,10 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/MazeTests",
+				);
 				INFOPLIST_FILE = MazeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripGo.MazeTests;
