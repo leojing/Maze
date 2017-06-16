@@ -20,6 +20,7 @@
 		24D4E5B11ED81B7100114508 /* TakeHomeTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; };
 		24D4E5B21ED81B7100114508 /* TakeHomeTask.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		24D8419C1EDBA7BA009E2337 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8419B1EDBA7BA009E2337 /* Room.swift */; };
+		CF343D149D88738ED76521A4 /* Pods_MazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F865000B5E12AE431603B767 /* Pods_MazeTests.framework */; };
 		E2F9A0860B45B9B4A45D8C22 /* Pods_Maze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */; };
 /* End PBXBuildFile section */
 
@@ -73,8 +74,11 @@
 		24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TakeHomeTask.framework; path = Maze/TakeHomeTask.framework; sourceTree = "<group>"; };
 		24D8419B1EDBA7BA009E2337 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		686C5FB8FCAF1762DCD25F6E /* Pods-Maze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Maze/Pods-Maze.release.xcconfig"; sourceTree = "<group>"; };
+		70E056B045220598F461D607 /* Pods-MazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Maze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3F834D7CAF7C0F6F0BA8AB3 /* Pods-MazeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MazeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests.release.xcconfig"; sourceTree = "<group>"; };
 		E278B1B437B5CBB6A526A5F1 /* Pods-Maze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Maze/Pods-Maze.debug.xcconfig"; sourceTree = "<group>"; };
+		F865000B5E12AE431603B767 /* Pods_MazeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MazeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CF343D149D88738ED76521A4 /* Pods_MazeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +196,8 @@
 			children = (
 				E278B1B437B5CBB6A526A5F1 /* Pods-Maze.debug.xcconfig */,
 				686C5FB8FCAF1762DCD25F6E /* Pods-Maze.release.xcconfig */,
+				70E056B045220598F461D607 /* Pods-MazeTests.debug.xcconfig */,
+				C3F834D7CAF7C0F6F0BA8AB3 /* Pods-MazeTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -199,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */,
+				F865000B5E12AE431603B767 /* Pods_MazeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,9 +239,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24D4E5A11ED7CE8900114508 /* Build configuration list for PBXNativeTarget "MazeTests" */;
 			buildPhases = (
+				FCDB8F55E82537B42B790C5A /* [CP] Check Pods Manifest.lock */,
 				24D4E5861ED7CE8800114508 /* Sources */,
 				24D4E5871ED7CE8800114508 /* Frameworks */,
 				24D4E5881ED7CE8800114508 /* Resources */,
+				BEFA5EFE1C90121EC05162C0 /* [CP] Embed Pods Frameworks */,
+				85152B1956E9C7118AC8FA66 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -353,6 +364,36 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Maze/Pods-Maze-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		85152B1956E9C7118AC8FA66 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEFA5EFE1C90121EC05162C0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		C56386C39F5FCC0387E7F49D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,6 +422,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Maze/Pods-Maze-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCDB8F55E82537B42B790C5A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -585,6 +641,7 @@
 		};
 		24D4E5A21ED7CE8900114508 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 70E056B045220598F461D607 /* Pods-MazeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -602,6 +659,7 @@
 		};
 		24D4E5A31ED7CE8900114508 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3F834D7CAF7C0F6F0BA8AB3 /* Pods-MazeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

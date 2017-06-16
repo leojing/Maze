@@ -11,7 +11,7 @@ import Foundation
 
 protocol MazeUIUpdateProtocol {
   
-  func updateMazeViewWith(_ imageUrl: String?, x: Float, y: Float)
+  func updateMazeViewWith(_ imageUrl: String?, start:(x: Float, y: Float))
   func updateMazeViewWithError(_ error: Error?)
   
 }

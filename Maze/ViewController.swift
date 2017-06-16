@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 
 class ViewController: UIViewController {
-
+  
   @IBOutlet weak var timeLabel: UILabel!
   @IBOutlet weak var generateButton: UIButton!
   @IBOutlet weak var loremButton: UIButton!
@@ -20,7 +20,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var heightOfMazeView: NSLayoutConstraint!
   @IBOutlet weak var topOfMazeView: NSLayoutConstraint!
   @IBOutlet weak var leadingOfMazeView: NSLayoutConstraint!
-
+  
   fileprivate static let tileWidth: Float = 5.0
   fileprivate var miniX: Float = 0.0, miniY: Float = 0.0, maxX: Float = 0.0, maxY: Float = 0.0
   fileprivate var startTime: Date?, endTime: Date?
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
       self.view.backgroundColor = UIColor(patternImage: backgroungImg)
     }
   }
- 
+  
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
@@ -61,7 +61,7 @@ extension ViewController {
     endTime = nil
     
     mazeLogicManager.uiUpdateProtocol = self
-    mazeLogicManager.startFetchRoom(x: miniX, y: miniY)
+    mazeLogicManager.startFetchRoom(at: (x: miniX, y: miniY))
   }
   
   private func setupUI() {
@@ -88,7 +88,7 @@ extension ViewController {
   @IBAction func ipsumAction(_ sender: Any) {
     print("ipsum")
   }
-
+  
 }
 
 // MARK: - UI Updates
@@ -135,7 +135,7 @@ extension ViewController {
       timeLabel.text = "Spent time: \(String(format: "%.2f", interval)) seconds"
     }
   }
-
+  
 }
 
 // MARK: - Conform to MazeUIUpdateProtocol
@@ -144,17 +144,17 @@ extension ViewController: MazeUIUpdateProtocol {
   
   // MARK: Error handling
   func updateMazeViewWithError(_ error: Error?) {
-    let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
-    alert.addAction(UIAlertAction(title: "oOh...", style: UIAlertActionStyle.cancel, handler:nil))
-//    self.present(alert, animated: true, completion: nil)
     if let errorMsg = error?.localizedDescription {
+      let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
+      alert.addAction(UIAlertAction(title: "oOh...", style: UIAlertActionStyle.cancel, handler:nil))
+      //    self.present(alert, animated: true, completion: nil)
       print("Error! \(errorMsg)")
     }
   }
-
+  
   // MARK: update maze view
-  func updateMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
-    redrawMazeViewWith(imageUrl, x: x, y: y)
+  func updateMazeViewWith(_ imageUrl: String?, start: (x: Float, y: Float)) {
+    redrawMazeViewWith(imageUrl, x: start.x, y: start.y)
     updateTimer()
   }
   
