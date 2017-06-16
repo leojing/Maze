@@ -10,14 +10,7 @@ import Foundation
 import TakeHomeTask
 
 class MazeLogicManager: NSObject {
-  
-  fileprivate enum Direction: String {
-    case west
-    case east
-    case north
-    case south
-  }
-  
+    
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
   
@@ -120,7 +113,10 @@ extension MazeLogicManager {
   
   // MARK: Parse Room Details
   fileprivate func parseRoomWithJson(_ json: [String: Any], start: (Float, Float), logicManager: MazeLogicManager) {
-    if let roomInfo = Room(json: json) {
+    if var roomInfo = Room(json: json) {
+      // set default location for room
+      roomInfo.setupLocation(start)
+      
       // Parse room id
       logicManager.parseRoomId(roomInfo.id, logicManager: logicManager)
       
@@ -128,7 +124,7 @@ extension MazeLogicManager {
       logicManager.parseTileURL(roomInfo.tileUrl, start: start, logicManager: logicManager)
       
       // Parse connected rooms
-      logicManager.parseConeectedRooms(roomInfo.rooms, start: start, logicManager: logicManager)
+      logicManager.parseConeectedRooms(roomInfo.rooms, room: roomInfo, logicManager: logicManager)
     }
   }
   
@@ -157,7 +153,7 @@ extension MazeLogicManager {
   }
   
   // MARK: - Parse Connected Rooms
-  private func parseConeectedRooms(_ connectedRooms: [String: Any], start: (Float, Float), logicManager: MazeLogicManager) {
+  private func parseConeectedRooms(_ connectedRooms: [String: Any], room: Room, logicManager: MazeLogicManager) {
     for (k, v) in connectedRooms {
       if let nestedDictionary = v as? [String: Any] {
         
@@ -171,7 +167,7 @@ extension MazeLogicManager {
         
         logicManager.concurrentQueue.async {
           // fetch new room with roomId and start location by recursion
-          logicManager.traversalRooms(newRoomId, start: logicManager.configDimension(k, start: start))
+          logicManager.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)))
         }
       }
     }
@@ -181,35 +177,7 @@ extension MazeLogicManager {
 // MARK: - Utilities
 
 extension MazeLogicManager {
-  
-  // MARK: define nearby room's location by it's direction to current room, for example, if current room is (0,0), the it's east room should be (1,0), west=(-1,0), north=(0,1), south=(0,-1)
-  fileprivate func configDimension(_ direction: String?, start: (x: Float, y: Float)) -> (Float, Float) {
-    var x = start.x, y = start.y
     
-    guard let dir = direction else {
-      return (0, 0)
-    }
-    
-    switch dir {
-    case Direction.west.rawValue:
-      x += -1
-      
-    case Direction.east.rawValue:
-      x += 1
-      
-    case Direction.north.rawValue:
-      y += 1
-      
-    case Direction.south.rawValue:
-      y += -1
-      
-    default:
-      return (0, 0)
-    }
-    
-    return (x, y)
-  }
-  
   // MARK: check if each room is only visited once
   func roomVisitedTwice() -> Bool {
     if let rooms = visitedRooms {
