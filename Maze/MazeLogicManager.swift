@@ -80,7 +80,7 @@ class MazeLogicManager: NSObject {
       
       strongSelf.mazeManager.fetchRoom(withIdentifier: roomId) { (data, error) in
         if let error = error {
-          strongSelf.errorOfRoom(error, logicManager: strongSelf)
+          strongSelf.errorOfRoom(error)
         }
         
         guard let data = data else {
@@ -92,7 +92,7 @@ class MazeLogicManager: NSObject {
         }
         
         // Parse Room Details
-        strongSelf.parseRoomWithJson(dictionary, start: start, logicManager: strongSelf)
+        strongSelf.parseRoomWithJson(dictionary, start: start)
       }
     }
   }
@@ -103,57 +103,57 @@ class MazeLogicManager: NSObject {
 extension MazeLogicManager {
   
   // MARK: Error Handling
-  fileprivate func errorOfRoom(_ error: Error, logicManager: MazeLogicManager) {
+  fileprivate func errorOfRoom(_ error: Error) {
     DispatchQueue.main.async {
-      if let uiProtocol = logicManager.uiUpdateProtocol{
+      if let uiProtocol = self.uiUpdateProtocol{
         uiProtocol.updateMazeViewWithError(error)
       }
     }
   }
   
   // MARK: Parse Room Details
-  fileprivate func parseRoomWithJson(_ json: [String: Any], start: (Float, Float), logicManager: MazeLogicManager) {
+  fileprivate func parseRoomWithJson(_ json: [String: Any], start: (Float, Float)) {
     if var roomInfo = Room(json: json) {
       // set default location for room
       roomInfo.setupLocation(start)
       
       // Parse room id
-      logicManager.parseRoomId(roomInfo, logicManager: logicManager)
+      self.parseRoomId(roomInfo)
       
       // Parse tile image url
-      logicManager.parseTileURL(roomInfo, logicManager: logicManager)
+      self.parseTileURL(roomInfo)
       
       // Parse connected rooms
-      logicManager.parseConeectedRooms(roomInfo, logicManager: logicManager)
+      self.parseConeectedRooms(roomInfo)
     }
   }
   
   // MARK: Parse Room ID
-  private func parseRoomId(_ room: Room, logicManager: MazeLogicManager) {
+  private func parseRoomId(_ room: Room) {
     // if this room is visited, return
-    if var visited = logicManager.visitedRooms {
+    if var visited = self.visitedRooms {
       if visited.contains(room.roomId) {
         return
       }
       
       // add it to visitedRooms Set to make sure it never been visited again
       visited.append(room.roomId)
-      logicManager.visitedRooms = visited
+      self.visitedRooms = visited
     }
   }
   
   // MARK: - Parse Tile Image URL
-  private func parseTileURL(_ room: Room, logicManager: MazeLogicManager) {
+  private func parseTileURL(_ room: Room) {
     DispatchQueue.main.async {
       // draw tile if UIUpdate protocol isn't nil
-      if let uiProtocol = logicManager.uiUpdateProtocol, let start = room.location {
+      if let uiProtocol = self.uiUpdateProtocol, let start = room.location {
         uiProtocol.updateMazeViewWith(room.tileUrl, start: start)
       }
     }
   }
   
   // MARK: - Parse Connected Rooms
-  private func parseConeectedRooms(_ room: Room, logicManager: MazeLogicManager) {
+  private func parseConeectedRooms(_ room: Room) {
     let connectedRooms = room.rooms
     for (k, v) in connectedRooms {
       if let nestedDictionary = v as? [String: Any] {
@@ -163,12 +163,12 @@ extension MazeLogicManager {
           newRoomId = roomId
         }
         if let lock = nestedDictionary["lock"] as? String {
-          newRoomId = logicManager.mazeManager.unlockRoom(withLock: lock)
+          newRoomId = self.mazeManager.unlockRoom(withLock: lock)
         }
         
-        logicManager.concurrentQueue.async {
+        self.concurrentQueue.async {
           // fetch new room with roomId and start location by recursion
-          logicManager.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)))
+          self.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)))
         }
       }
     }
