@@ -30,6 +30,8 @@ class MazeTests: XCTestCase {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     
+    let mockLogicManager = MockLogicManager()
+    vc.mazeLogicManager = mockLogicManager
     XCTAssertNotNil(vc.mazeLogicManager)
     
     for i in 0 ..< 10 {
@@ -43,7 +45,7 @@ class MazeTests: XCTestCase {
       //Async function when finished call [expectation fullfill]
       self.waitForExpectations(timeout: 0) { (error) in
         XCTAssertNotNil(self.vc.mazeLogicManager.visitedRooms, "rooms are not empty")
-        XCTAssertFalse(self.vc.mazeLogicManager.roomVisitedTwice())
+        XCTAssertFalse(mockLogicManager.roomVisitedTwice())
       }
     }
   }
@@ -55,4 +57,28 @@ class MazeTests: XCTestCase {
     }
   }
   
+}
+
+
+// MARK: - Mock MazeLogicManager
+
+class MockLogicManager: MazeLogicManager {
+  
+  // MARK: check if each room is only visited once
+  fileprivate func roomVisitedTwice() -> Bool {
+    if let rooms = self.visitedRooms {
+      let sortedRooms = rooms.sorted()
+      for i in 0 ..< sortedRooms.count-1 {
+        let a = sortedRooms[i]
+        let b = sortedRooms[i+1]
+        if a == b {
+          return true
+        }
+      }
+    } else {
+      return true
+    }
+    
+    return false
+  }
 }

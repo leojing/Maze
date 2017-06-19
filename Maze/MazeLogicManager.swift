@@ -173,27 +173,3 @@ extension MazeLogicManager {
     }
   }
 }
-
-// MARK: - Utilities
-
-extension MazeLogicManager {
-    
-  // MARK: check if each room is only visited once
-  func roomVisitedTwice() -> Bool {
-    if let rooms = visitedRooms {
-      let sortedRooms = rooms.sorted()
-      for i in 0 ..< sortedRooms.count-1 {
-        let a = sortedRooms[i]
-        let b = sortedRooms[i+1]
-        if a == b {
-          return true
-        }
-      }
-    } else {
-      return true
-    }
-    
-    return false
-  }
-  
-}
