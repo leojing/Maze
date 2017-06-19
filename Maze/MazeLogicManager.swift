@@ -61,8 +61,8 @@ class MazeLogicManager: NSObject {
   }
   
   // MARK: This method is the main logic one, its core is BFS Algorithm, this method is recursion to make sure each room can be visited.
-  public func traversalRooms(_ roomId: String?, start: (x: Float, y: Float)) {
-    guard let roomId = roomId, roomId.characters.count > 0 else {
+  public func traversalRooms(_ roomId: String, start: (x: Float, y: Float)) {
+    if roomId.characters.count <= 0 {
       return
     }
     

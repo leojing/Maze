@@ -96,9 +96,10 @@ extension ViewController {
 extension ViewController {
   
   // MARK: update MazeView's frame, location and draw tile into maze
-  fileprivate func redrawMazeViewWith(_ imageUrl: String?, x: Float, y: Float) {
+  fileprivate func redrawMazeViewWith(_ imageUrl: String?, start: (x: Float, y: Float)) {
     // draw each room with it's relatively location (x, y) and tile image's url
     let tileWidth = CGFloat(ViewController.tileWidth)
+    let x = start.x, y = start.y
     let _x = CGFloat(x) * tileWidth
     let _y = CGFloat(y) * tileWidth
     
@@ -154,7 +155,7 @@ extension ViewController: MazeUIUpdateProtocol {
   
   // MARK: update maze view
   func updateMazeViewWith(_ imageUrl: String?, start: (x: Float, y: Float)) {
-    redrawMazeViewWith(imageUrl, x: start.x, y: start.y)
+    redrawMazeViewWith(imageUrl, start: start)
     updateTimer()
   }
   
