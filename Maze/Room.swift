@@ -36,7 +36,7 @@ public enum Direction {
 }
 
 struct Room {
-  let id: String
+  let roomId: String
   let tileUrl: String
   let rooms: [String: Any]
   let type: String
@@ -47,7 +47,7 @@ struct Room {
 extension Room {
   
   init?(json: [String: Any]) {
-    guard let id = json["id"] as? String,
+    guard let roomId = json["id"] as? String,
       let tileUrl = json["tileUrl"] as? String,
       let roomsJSON = json["rooms"] as? [String: Any],
       let type = json["type"] as? String
@@ -55,7 +55,7 @@ extension Room {
         return nil
     }
     
-    self.id = id
+    self.roomId = roomId
     self.tileUrl = tileUrl
     self.rooms = roomsJSON
     self.type = type

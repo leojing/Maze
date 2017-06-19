@@ -118,42 +118,43 @@ extension MazeLogicManager {
       roomInfo.setupLocation(start)
       
       // Parse room id
-      logicManager.parseRoomId(roomInfo.id, logicManager: logicManager)
+      logicManager.parseRoomId(roomInfo, logicManager: logicManager)
       
       // Parse tile image url
-      logicManager.parseTileURL(roomInfo.tileUrl, start: start, logicManager: logicManager)
+      logicManager.parseTileURL(roomInfo, logicManager: logicManager)
       
       // Parse connected rooms
-      logicManager.parseConeectedRooms(roomInfo.rooms, room: roomInfo, logicManager: logicManager)
+      logicManager.parseConeectedRooms(roomInfo, logicManager: logicManager)
     }
   }
   
   // MARK: Parse Room ID
-  private func parseRoomId(_ roomId: String, logicManager: MazeLogicManager) {
+  private func parseRoomId(_ room: Room, logicManager: MazeLogicManager) {
     // if this room is visited, return
     if var visited = logicManager.visitedRooms {
-      if visited.contains(roomId) {
+      if visited.contains(room.roomId) {
         return
       }
       
       // add it to visitedRooms Set to make sure it never been visited again
-      visited.append(roomId)
+      visited.append(room.roomId)
       logicManager.visitedRooms = visited
     }
   }
   
   // MARK: - Parse Tile Image URL
-  private func parseTileURL(_ imageURL: String, start: (Float, Float), logicManager: MazeLogicManager) {
+  private func parseTileURL(_ room: Room, logicManager: MazeLogicManager) {
     DispatchQueue.main.async {
       // draw tile if UIUpdate protocol isn't nil
-      if let uiProtocol = logicManager.uiUpdateProtocol {
-        uiProtocol.updateMazeViewWith(imageURL, start: start)
+      if let uiProtocol = logicManager.uiUpdateProtocol, let start = room.location {
+        uiProtocol.updateMazeViewWith(room.tileUrl, start: start)
       }
     }
   }
   
   // MARK: - Parse Connected Rooms
-  private func parseConeectedRooms(_ connectedRooms: [String: Any], room: Room, logicManager: MazeLogicManager) {
+  private func parseConeectedRooms(_ room: Room, logicManager: MazeLogicManager) {
+    let connectedRooms = room.rooms
     for (k, v) in connectedRooms {
       if let nestedDictionary = v as? [String: Any] {
         
