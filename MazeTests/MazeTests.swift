@@ -30,7 +30,9 @@ class MazeTests: XCTestCase {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
     
+    let mockUIUpdateManager = MockUIUpdateManager()
     let mockLogicManager = MockLogicManager()
+    mockLogicManager.uiUpdateProtocol = mockUIUpdateManager
     vc.mazeLogicManager = mockLogicManager
     XCTAssertNotNil(vc.mazeLogicManager)
     
@@ -59,6 +61,18 @@ class MazeTests: XCTestCase {
   
 }
 
+// MARK: - Mock MazeUIUpdateManager
+
+class MockUIUpdateManager: MazeUIUpdateProtocol {
+  
+  func updateMazeViewWithError(_ error: Error?) {
+    print("error")
+  }
+  
+  func updateMazeViewWith(_ imageUrl: String?, start: (x: Float, y: Float)) {
+    print(imageUrl ?? "no url")
+  }
+}
 
 // MARK: - Mock MazeLogicManager
 
