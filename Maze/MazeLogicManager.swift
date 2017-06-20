@@ -9,12 +9,16 @@
 import Foundation
 import TakeHomeTask
 
+typealias CompletedHandling = (_ tileImageUrl: String?, _ start: (Float, Float)?, _ error: Error?)->Void
+
 class MazeLogicManager: NSObject {
-    
+  
+  
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
   
   public var uiUpdateProtocol: MazeUIUpdateProtocol?
+  fileprivate var completedHandling: CompletedHandling?
   
   private var _visitedRooms: [String]?
   public var visitedRooms: [String]? {
@@ -32,7 +36,7 @@ class MazeLogicManager: NSObject {
   }
   
   // MARK: fetch start room, and set it's location as (x,y)
-  public func startFetchRoom(at start:(x: Float, y: Float)) {
+  public func startFetchRoom(at start:(x: Float, y: Float), completedHandling: @escaping CompletedHandling) {
     if visitedRooms == nil {
       visitedRooms = [String]()
     }
@@ -54,14 +58,14 @@ class MazeLogicManager: NSObject {
       let json = try? JSONSerialization.jsonObject(with: data, options: [])
       if let dictionary = json as? [String: Any] {
         if let roomId = dictionary["id"] as? String {
-          self.traversalRooms(roomId, start: start)
+          self.traversalRooms(roomId, start: start, completedHandling: completedHandling)
         }
       }
     }
   }
   
   // MARK: This method is the main logic one, its core is BFS Algorithm, this method is recursion to make sure each room can be visited.
-  public func traversalRooms(_ roomId: String, start: (x: Float, y: Float)) {
+  public func traversalRooms(_ roomId: String, start: (x: Float, y: Float), completedHandling: @escaping CompletedHandling) {
     if roomId.characters.count <= 0 {
       return
     }
@@ -87,6 +91,7 @@ class MazeLogicManager: NSObject {
           return
         }
         
+        self?.completedHandling = completedHandling
         // Parse Room Details
         self?.parseRoomWithJson(dictionary, start: start)
       }
@@ -102,7 +107,10 @@ extension MazeLogicManager {
   fileprivate func errorOfRoom(_ error: Error) {
     DispatchQueue.main.async {
       if let uiProtocol = self.uiUpdateProtocol{
-        uiProtocol.updateMazeViewWithError(error)
+        if let callback = self.completedHandling {
+          callback(nil, nil, error)
+        }
+        //        uiProtocol.updateMazeViewWithError(error)
       }
     }
   }
@@ -143,7 +151,10 @@ extension MazeLogicManager {
     DispatchQueue.main.async {
       // draw tile if UIUpdate protocol isn't nil
       if let uiProtocol = self.uiUpdateProtocol, let start = room.location {
-        uiProtocol.updateMazeViewWith(room.tileUrl, start: start)
+        if let callback = self.completedHandling {
+          callback(room.tileUrl, start, nil)
+        }
+        //        uiProtocol.updateMazeViewWith(room.tileUrl, start: start)
       }
     }
   }
@@ -164,7 +175,9 @@ extension MazeLogicManager {
         
         self.concurrentQueue.async {
           // fetch new room with roomId and start location by recursion
-          self.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)))
+          if let callback = self.completedHandling {
+            self.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)), completedHandling: callback)
+          }
         }
       }
     }

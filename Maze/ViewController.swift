@@ -61,7 +61,15 @@ extension ViewController {
     endTime = nil
     
     mazeLogicManager.uiUpdateProtocol = self
-    mazeLogicManager.startFetchRoom(at: (x: miniX, y: miniY))
+    mazeLogicManager.startFetchRoom(at: (miniX, miniY)) { (tileUrl, start: (Float, Float)?, error) in
+      if let error = error {
+        self.updateMazeViewWithError(error)
+      }
+      if let start = start, let tileUrl = tileUrl {
+        self.updateMazeViewWith(tileUrl, start: start)
+      }
+    }
+    //    mazeLogicManager.startFetchRoom(at: (miniX, miniY), completedHandling: )
   }
   
   private func setupUI() {

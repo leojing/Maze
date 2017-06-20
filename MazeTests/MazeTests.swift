@@ -39,7 +39,15 @@ class MazeTests: XCTestCase {
     for i in 0 ..< 10 {
       let ex = self.expectation(description: String(i))
       
-      self.vc.mazeLogicManager.startFetchRoom(at: (x: 0, y: 0))
+      self.vc.mazeLogicManager.startFetchRoom(at: (0, 0), completedHandling: { (tileUrl, start: (Float, Float)?, error) in
+        if let error = error {
+          mockUIUpdateManager.updateMazeViewWithError(error)
+        }
+        
+        if let start = start, let tileUrl = tileUrl {
+          mockUIUpdateManager.updateMazeViewWith(tileUrl, start: start)
+        }
+      })
       
       sleep(10)
       ex.fulfill()
@@ -80,7 +88,7 @@ class MockLogicManager: MazeLogicManager {
   
   // MARK: check if each room is only visited once
   fileprivate func roomVisitedTwice() -> Bool {
-    if let rooms = self.visitedRooms {
+    if let rooms = self.visitedRooms, rooms.count > 1 {
       let sortedRooms = rooms.sorted()
       for i in 0 ..< sortedRooms.count-1 {
         let a = sortedRooms[i]
