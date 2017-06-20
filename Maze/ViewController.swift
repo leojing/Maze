@@ -61,7 +61,7 @@ extension ViewController {
     endTime = nil
     
     mazeLogicManager.uiUpdateProtocol = self
-    mazeLogicManager.startFetchRoom(at: (x: miniX, y: miniY))
+    mazeLogicManager.startFetchRoom(at: (miniX, miniY))
   }
   
   private func setupUI() {
