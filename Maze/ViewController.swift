@@ -98,18 +98,8 @@ extension ViewController {
   // MARK: update MazeView's frame, location and draw tile into maze
   fileprivate func redrawMazeViewWith(_ imageUrl: String?, start: (x: Float, y: Float)) {
     // draw each room with it's relatively location (x, y) and tile image's url
-    let tileWidth = CGFloat(ViewController.tileWidth)
+    var tileWidth = CGFloat(ViewController.tileWidth)
     let x = start.x, y = start.y
-    let _x = CGFloat(x) * tileWidth
-    let _y = CGFloat(y) * tileWidth
-    
-    guard let url = imageUrl else {
-      return
-    }
-    let tileImageView = UIImageView(frame: CGRect(x: _x, y: _y, width: tileWidth, height: tileWidth))
-    tileImageView.sd_setImage(with: URL(string: url))
-    self.mazeView.addSubview(tileImageView)
-    
     
     // adjust MazeView's frame and location by every time a new room is fetched to make sure Maze can cover correctly on Border background ImageView
     miniX = miniX < x ? miniX : x
@@ -118,12 +108,35 @@ extension ViewController {
     maxX = maxX > x ? maxX : x
     maxY = maxY > y ? maxY : y
     
-    self.widthOfMazeView.constant =  tileWidth * CGFloat(self.maxX-self.miniX)
-    self.heightOfMazeView.constant = tileWidth * CGFloat(self.maxY-self.miniY)
+    self.widthOfMazeView.constant = self.view.frame.size.width-20
+    if (self.maxX-self.miniX) > 0 {
+      self.heightOfMazeView.constant = self.widthOfMazeView.constant*CGFloat(self.maxY-self.miniY)/CGFloat(self.maxX-self.miniX)
+    } else {
+      self.heightOfMazeView.constant = self.widthOfMazeView.constant
+    }
+    if (self.maxX-self.miniX) > 0 {
+      tileWidth = self.widthOfMazeView.constant/CGFloat(self.maxX-self.miniX)
+    } else {
+      tileWidth = self.widthOfMazeView.constant
+    }
     
-    self.topOfMazeView.constant = tileWidth * CGFloat(self.miniY) - 10
-    self.leadingOfMazeView.constant = tileWidth * CGFloat(self.miniX) - 10
+    let _x = CGFloat(x) * tileWidth
+    let _y = CGFloat(y) * tileWidth
     
+    guard let url = imageUrl else {
+      return
+    }
+    let tileImageView = UIImageView(frame: CGRect(x: _x, y: _y, width: tileWidth, height: tileWidth))
+    tileImageView.sd_setImage(with: URL(string: url))
+    tileImageView.translatesAutoresizingMaskIntoConstraints = false
+    self.mazeView.addSubview(tileImageView)
+    
+    self.mazeView.addConstraint(NSLayoutConstraint(item: tileImageView, attribute: NSLayoutAttribute.width, relatedBy: NSLayoutRelation.equal, toItem: mazeView, attribute: NSLayoutAttribute.width, multiplier: tileWidth/self.widthOfMazeView.constant, constant: 0))
+    tileImageView.addConstraint(NSLayoutConstraint(item: tileImageView, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: tileImageView, attribute: NSLayoutAttribute.width, multiplier: 1, constant: 0))
+    
+//    self.topOfMazeView.constant = tileWidth * CGFloat(self.miniY) - 10
+//    self.leadingOfMazeView.constant = tileWidth * CGFloat(self.miniX) - 10
+
     self.view.updateConstraintsIfNeeded()
     self.view.layoutIfNeeded()
   }
