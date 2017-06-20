@@ -74,13 +74,9 @@ class MazeLogicManager: NSObject {
     }
     
     concurrentQueue.async { [weak self] in
-      guard let strongSelf = self else {
-        return
-      }
-      
-      strongSelf.mazeManager.fetchRoom(withIdentifier: roomId) { (data, error) in
+      self?.mazeManager.fetchRoom(withIdentifier: roomId) { (data, error) in
         if let error = error {
-          strongSelf.errorOfRoom(error)
+          self?.errorOfRoom(error)
         }
         
         guard let data = data else {
@@ -92,7 +88,7 @@ class MazeLogicManager: NSObject {
         }
         
         // Parse Room Details
-        strongSelf.parseRoomWithJson(dictionary, start: start)
+        self?.parseRoomWithJson(dictionary, start: start)
       }
     }
   }
