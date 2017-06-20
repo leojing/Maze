@@ -20,6 +20,7 @@
 		24D4E5B11ED81B7100114508 /* TakeHomeTask.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; };
 		24D4E5B21ED81B7100114508 /* TakeHomeTask.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		24D8419C1EDBA7BA009E2337 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24D8419B1EDBA7BA009E2337 /* Room.swift */; };
+		7A824755B97D8A27DC696110 /* Pods_MazeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CF7624CEB812A3631AF5CB1 /* Pods_MazeTests.framework */; };
 		E2F9A0860B45B9B4A45D8C22 /* Pods_Maze.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */; };
 /* End PBXBuildFile section */
 
@@ -72,6 +73,9 @@
 		24D4E59B1ED7CE8900114508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		24D4E5AF1ED81B6400114508 /* TakeHomeTask.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TakeHomeTask.framework; path = Maze/TakeHomeTask.framework; sourceTree = "<group>"; };
 		24D8419B1EDBA7BA009E2337 /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		4CB4BFFE6BD42B69BDB55B45 /* Pods-MazeTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MazeTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests.debug.xcconfig"; sourceTree = "<group>"; };
+		4CF7624CEB812A3631AF5CB1 /* Pods_MazeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MazeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5EE1965CA94286D03886D674 /* Pods-MazeTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MazeTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests.release.xcconfig"; sourceTree = "<group>"; };
 		686C5FB8FCAF1762DCD25F6E /* Pods-Maze.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maze.release.xcconfig"; path = "Pods/Target Support Files/Pods-Maze/Pods-Maze.release.xcconfig"; sourceTree = "<group>"; };
 		7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Maze.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E278B1B437B5CBB6A526A5F1 /* Pods-Maze.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Maze.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Maze/Pods-Maze.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A824755B97D8A27DC696110 /* Pods_MazeTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +196,8 @@
 			children = (
 				E278B1B437B5CBB6A526A5F1 /* Pods-Maze.debug.xcconfig */,
 				686C5FB8FCAF1762DCD25F6E /* Pods-Maze.release.xcconfig */,
+				4CB4BFFE6BD42B69BDB55B45 /* Pods-MazeTests.debug.xcconfig */,
+				5EE1965CA94286D03886D674 /* Pods-MazeTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -199,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				7DF1EA0C9780582F06A63F98 /* Pods_Maze.framework */,
+				4CF7624CEB812A3631AF5CB1 /* Pods_MazeTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -231,9 +239,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 24D4E5A11ED7CE8900114508 /* Build configuration list for PBXNativeTarget "MazeTests" */;
 			buildPhases = (
+				2DAFACE8F372F003F29354E2 /* [CP] Check Pods Manifest.lock */,
 				24D4E5861ED7CE8800114508 /* Sources */,
 				24D4E5871ED7CE8800114508 /* Frameworks */,
 				24D4E5881ED7CE8800114508 /* Resources */,
+				064AB8C6F1FED31D9F295475 /* [CP] Embed Pods Frameworks */,
+				0DC2271B9DBE6D3E776BE801 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -338,6 +349,51 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		064AB8C6F1FED31D9F295475 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0DC2271B9DBE6D3E776BE801 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MazeTests/Pods-MazeTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		2DAFACE8F372F003F29354E2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		6BBDBBBA497754CF809B6EBE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -585,6 +641,7 @@
 		};
 		24D4E5A21ED7CE8900114508 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4CB4BFFE6BD42B69BDB55B45 /* Pods-MazeTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -602,6 +659,7 @@
 		};
 		24D4E5A31ED7CE8900114508 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EE1965CA94286D03886D674 /* Pods-MazeTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
