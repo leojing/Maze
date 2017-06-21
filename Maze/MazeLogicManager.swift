@@ -9,7 +9,7 @@
 import Foundation
 import TakeHomeTask
 
-typealias CompletedHandling = (_ tileImageUrl: String?, _ start: (Float, Float)?, _ error: Error?)->Void
+typealias CompletedHandling = (String?, (Float, Float)?, Error?)->Void
 
 class MazeLogicManager: NSObject {
   
@@ -17,7 +17,6 @@ class MazeLogicManager: NSObject {
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
   
-  public var uiUpdateProtocol: MazeUIUpdateProtocol?
   fileprivate var completedHandling: CompletedHandling?
   
   private var _visitedRooms: [String]?
@@ -106,11 +105,8 @@ extension MazeLogicManager {
   // MARK: Error Handling
   fileprivate func errorOfRoom(_ error: Error) {
     DispatchQueue.main.async {
-      if let uiProtocol = self.uiUpdateProtocol{
-        if let callback = self.completedHandling {
-          callback(nil, nil, error)
-        }
-        //        uiProtocol.updateMazeViewWithError(error)
+      if let callback = self.completedHandling {
+        callback(nil, nil, error)
       }
     }
   }
@@ -149,12 +145,9 @@ extension MazeLogicManager {
   // MARK: - Parse Tile Image URL
   private func parseTileURL(_ room: Room) {
     DispatchQueue.main.async {
-      // draw tile if UIUpdate protocol isn't nil
-      if let uiProtocol = self.uiUpdateProtocol, let start = room.location {
-        if let callback = self.completedHandling {
-          callback(room.tileUrl, start, nil)
-        }
-        //        uiProtocol.updateMazeViewWith(room.tileUrl, start: start)
+      // draw tile if callback & start location are not nil
+      if let callback = self.completedHandling, let start = room.location {
+        callback(room.tileUrl, start, nil)
       }
     }
   }
