@@ -15,6 +15,7 @@ class ViewController: UIViewController {
   @IBOutlet weak var generateButton: UIButton!
   @IBOutlet weak var loremButton: UIButton!
   @IBOutlet weak var ipsumButton: UIButton!
+  @IBOutlet weak var borderView: UIView!
   @IBOutlet weak var mazeView: UIView!
   @IBOutlet weak var widthOfMazeView: NSLayoutConstraint!
   @IBOutlet weak var heightOfMazeView: NSLayoutConstraint!
@@ -78,15 +79,52 @@ extension ViewController {
   @IBAction func generateAction(_ sender: Any) {
     print("generate")
     
+    mazeView.alpha = 1
     setup()
   }
   
   @IBAction func loremAction(_ sender: Any) {
     print("lorem")
+    
+    screenshotMazeView()
   }
   
   @IBAction func ipsumAction(_ sender: Any) {
     print("ipsum")
+    
+    rotateMazeView()
+  }
+  
+  private func screenshotMazeView() {
+    for view in mazeView.subviews {
+      view.frame.origin = CGPoint(x: view.frame.origin.x-CGFloat(miniX*ViewController.tileWidth), y: view.frame.origin.y-CGFloat(miniY*ViewController.tileWidth))
+      borderView.addSubview(view)
+      mazeView.alpha = 0
+    }
+    
+    let realRect = CGRect(origin: borderView.frame.origin, size: borderView.frame.size)
+    UIGraphicsBeginImageContextWithOptions(borderView.frame.size, borderView.isOpaque, 0.0)
+    borderView.drawHierarchy(in: realRect, afterScreenUpdates: true)
+    let snapshotImageFromMyView = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    
+    if let screenshotImage = snapshotImageFromMyView {
+      UIImageWriteToSavedPhotosAlbum(screenshotImage, nil, nil, nil)
+    }
+  }
+  
+  private func rotateMazeView() {
+    for view in borderView.subviews {
+      view.removeFromSuperview()
+    }
+    
+    for view in mazeView.subviews {
+      view.frame.origin = CGPoint(x: view.frame.origin.x-CGFloat(miniX*ViewController.tileWidth), y: view.frame.origin.y-CGFloat(miniY*ViewController.tileWidth))
+      borderView.addSubview(view)
+    }
+    mazeView.alpha = 0
+    
+    borderView.transform = CGAffineTransform.identity.rotated(by: CGFloat(Double.pi/2))
   }
   
 }

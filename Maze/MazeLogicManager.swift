@@ -109,7 +109,7 @@ extension MazeLogicManager {
   
   // MARK: Parse Room Details
   fileprivate func parseRoomWithJson(_ json: [String: Any], start: (Float, Float)) {
-    if var roomInfo = Room(json: json) {
+    if var roomInfo = Room(json) {
       // set default location for room
       roomInfo.setupLocation(start)
       
@@ -152,18 +152,16 @@ extension MazeLogicManager {
   private func parseConeectedRooms(_ room: Room) {
     let connectedRooms = room.rooms
     for (k, v) in connectedRooms {
-      if let nestedDictionary = v as? [String: Any] {
-        
-        var newRoomId = String()
-        if let roomId = nestedDictionary["room"] as? String {
-          newRoomId = roomId
-        }
-        if let lock = nestedDictionary["lock"] as? String {
-          newRoomId = self.mazeManager.unlockRoom(withLock: lock)
-        }
-        
-        self.concurrentQueue.async {
+      switch v {
+      case .unlock(let roomId):
+        concurrentQueue.async {
           // fetch new room with roomId and start location by recursion
+          self.traversalRooms(roomId, start: room.locationForDirection(Direction(direction: k)))
+        }
+        
+      case .lock(let lockId):
+        concurrentQueue.async {
+          let newRoomId = self.mazeManager.unlockRoom(withLock: lockId)
           self.traversalRooms(newRoomId, start: room.locationForDirection(Direction(direction: k)))
         }
       }

@@ -8,6 +8,11 @@
 
 import Foundation
 
+enum LockType {
+  case unlock(String)
+  case lock(String)
+}
+
 public enum Direction {
   case west
   case east
@@ -38,7 +43,7 @@ public enum Direction {
 struct Room {
   let roomId: String
   let tileUrl: String
-  let rooms: [String: Any]
+  var rooms: [String: LockType]
   let type: String
   
   var location: (x: Float, y: Float)?
@@ -46,7 +51,7 @@ struct Room {
 
 extension Room {
   
-  init?(json: [String: Any]) {
+  init?(_ json: [String: Any]) {
     guard let roomId = json["id"] as? String,
       let tileUrl = json["tileUrl"] as? String,
       let roomsJSON = json["rooms"] as? [String: Any],
@@ -57,8 +62,27 @@ extension Room {
     
     self.roomId = roomId
     self.tileUrl = tileUrl
-    self.rooms = roomsJSON
+    self.rooms = Room.parseRooms(roomsJSON)
     self.type = type
+  }
+  
+  static func parseRooms(_ json: [String: Any]) -> [String: LockType] {
+    var result = [String: LockType]()
+    for (k, v) in json {
+      var lockType: LockType? = nil
+      if let nestedDictionary = v as? [String: Any] {
+        if let roomId = nestedDictionary["room"] as? String {
+          lockType = LockType.unlock(roomId)
+        }
+        if let lock = nestedDictionary["lock"] as? String {
+          lockType = LockType.lock(lock)
+        }
+      }
+      
+      result[k] = lockType
+    }
+    
+    return result
   }
   
   mutating func setupLocation(_ location: (x: Float, y: Float)) {

@@ -52,6 +52,20 @@ class MazeTests: XCTestCase {
     }
   }
   
+  func testParseRoom() {
+    let json = ["id":"R4b7f8b8bd464e959","tileUrl":"https://example.com/sometile.jpg","rooms": ["east": ["room":"R4b7f8c8cd464ee5e"], "west":["lock":"onF1pXP9jUimx0v9+5oBcccqid=="]], "type":"EMPTY"] as [String : Any]
+    
+    let room = Room(json)
+    
+    XCTAssertNil(room?.rooms)
+    
+    if case let .unlock(east) = room!.rooms["east"]! {
+      XCTAssertEqual(east, "R4b7f8c8cd464ee5e")
+    } else {
+      XCTFail("it's not the right room")
+    }
+  }
+  
   func testPerformanceExample() {
     // This is an example of a performance test case.
     self.measure {
