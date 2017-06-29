@@ -86,13 +86,13 @@ extension ViewController {
   @IBAction func loremAction(_ sender: Any) {
     print("lorem")
     
-    screenshotMazeView()
+//    screenshotMazeView()
   }
   
   @IBAction func ipsumAction(_ sender: Any) {
     print("ipsum")
     
-    rotateMazeView()
+//    rotateMazeView()
   }
   
   private func screenshotMazeView() {
