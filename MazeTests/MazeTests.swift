@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import Maze
+@testable import Pods_Maze
 
 class MazeTests: XCTestCase {
   

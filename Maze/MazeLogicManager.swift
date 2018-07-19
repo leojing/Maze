@@ -13,21 +13,22 @@ class MazeLogicManager: NSObject {
     
   fileprivate let mazeManager = MazeManager()
   fileprivate let concurrentQueue = DispatchQueue(label: "jing.luo.concurrent", attributes: .concurrent)
-  
+  fileprivate let safeQueue = DispatchQueue(label: "SafeQueue")
+
   public var uiUpdateProtocol: MazeUIUpdateProtocol?
   
   private var _visitedRooms: [String]?
   public var visitedRooms: [String]? {
     set {
-      concurrentQueue.sync {
-        _visitedRooms = newValue
+        safeQueue.async() {
+            self._visitedRooms = newValue
       }
     }
-    
+
     get {
-      return concurrentQueue.sync {
-        _visitedRooms
-      }
+        return safeQueue.sync {
+            _visitedRooms
+        }
     }
   }
   
